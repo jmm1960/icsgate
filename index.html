@@ -8,16 +8,17 @@
         document.addEventListener("DOMContentLoaded", function () {
             function handleFetchAndDownload() {
                 let urlParams = new URLSearchParams(window.location.search);
-                let content = urlParams.get('content');
-                if (!content) return;
-                let url = URL.createObjectURL(new Blob([content], { type: 'text/calendar' }));
+                let event = urlParams.get('c');
+                if (!event) return;
+                let url = URL.createObjectURL(new Blob([event], { type: 'text/calendar' }));
                 let a = document.createElement('a');
                 a.href = url;
-                a.download = 'content.ics';
+                a.download = 'event.ics';
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
+                document.body.innerText = event; 
             }
             handleFetchAndDownload();
         });
