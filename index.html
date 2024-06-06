@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convert to ICS</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            function handleFetchAndDownload() {
+                let urlParams = new URLSearchParams(window.location.search);
+                let content = urlParams.get('content');
+                if (!content) return;
+                let url = URL.createObjectURL(new Blob([content], { type: 'text/calendar' }));
+                let a = document.createElement('a');
+                a.href = url;
+                a.download = 'content.ics';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+            handleFetchAndDownload();
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>
